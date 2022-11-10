@@ -202,6 +202,8 @@ public func verifySnapshot<Value, Format>(
       let snapshotFileUrl = snapshotDirectoryUrl
         .appendingPathComponent("\(testName).\(identifier)")
         .appendingPathExtension(snapshotting.pathExtension ?? "")
+      let fileManager = FileManager.default
+      try fileManager.createDirectory(at: snapshotDirectoryUrl, withIntermediateDirectories: true)
 
       let tookSnapshot = XCTestExpectation(description: "Took snapshot")
       var optionalDiffable: Format?
@@ -231,78 +233,33 @@ public func verifySnapshot<Value, Format>(
       guard var diffable = optionalDiffable else {
         return "Couldn't snapshot value"
       }
-
-      let fileManager = FileManager.default
-
-      var treatRecordingsAsArtifacts = false
-      if let recordingsAsArtifacts = ProcessInfo.processInfo.environment["TREAT_RECORDINGS_AS_ARTIFACTS"] {
-        treatRecordingsAsArtifacts = (recordingsAsArtifacts as NSString).boolValue
-      }
-
-      let artifactsBaseUrl = URL(
-        fileURLWithPath: ProcessInfo.processInfo.environment["SNAPSHOT_ARTIFACTS"] ?? NSTemporaryDirectory(), isDirectory: true
-      )
-      let artifactsSubUrl = artifactsBaseUrl.appendingPathComponent(fileName)
-
-      if recording {
-        let writeToUrl = treatRecordingsAsArtifacts
-          ? artifactsSubUrl.appendingPathComponent(snapshotFileUrl.lastPathComponent)
-          : snapshotFileUrl
-
-        try fileManager.createDirectory(
-          at: writeToUrl.deletingLastPathComponent(), withIntermediateDirectories: true
-        )
-        try snapshotting.diffing.toData(diffable).write(to: writeToUrl)
+      
+      guard !recording, fileManager.fileExists(atPath: snapshotFileUrl.path) else {
+        try snapshotting.diffing.toData(diffable).write(to: snapshotFileUrl)
         #if !os(Linux) && !os(Windows)
         if ProcessInfo.processInfo.environment.keys.contains("__XCODE_BUILT_PRODUCTS_DIR_PATHS") {
           XCTContext.runActivity(named: "Attached Recorded Snapshot") { activity in
-            let attachment = XCTAttachment(contentsOfFile: writeToUrl)
+            let attachment = XCTAttachment(contentsOfFile: snapshotFileUrl)
             activity.add(attachment)
           }
         }
         #endif
 
-        return treatRecordingsAsArtifacts
+        return recording
           ? """
-            Record mode is on. Treating recordings as artifacts.
+            Record mode is on. Turn record mode off and re-run "\(testName)" to test against the newly-recorded snapshot.
 
-            open "\(writeToUrl.path)"
+            open "\(snapshotFileUrl.path)"
 
             Recorded snapshot: …
             """
           : """
-            Record mode is on. Turn record mode off and re-run "\(testName)" to test against the newly-recorded snapshot.
+            No reference was found on disk. Automatically recorded snapshot: …
 
-            open "\(writeToUrl.path)"
+            open "\(snapshotFileUrl.path)"
 
-            Recorded snapshot: …
+            Re-run "\(testName)" to test against the newly-recorded snapshot.
             """
-      } else {
-        if !fileManager.fileExists(atPath: snapshotFileUrl.path) {
-          let writeToUrl = treatRecordingsAsArtifacts
-            ? artifactsSubUrl.appendingPathComponent(snapshotFileUrl.lastPathComponent)
-            : snapshotFileUrl
-
-          try fileManager.createDirectory(
-            at: writeToUrl.deletingLastPathComponent(), withIntermediateDirectories: true
-          )
-          try snapshotting.diffing.toData(diffable).write(to: writeToUrl)
-          return treatRecordingsAsArtifacts
-            ? """
-              No reference was found on disk. Treating recordings as artifacts.
-
-              open "\(writeToUrl.path)"
-
-              Recorded snapshot: …
-              """
-            : """
-              No reference was found on disk. Automatically recorded snapshot: …
-
-              open "\(writeToUrl.path)"
-
-              Re-run "\(testName)" to test against the newly-recorded snapshot.
-              """
-        }
       }
 
       let data = try Data(contentsOf: snapshotFileUrl)
@@ -321,13 +278,13 @@ public func verifySnapshot<Value, Format>(
         return nil
       }
 
-      let writeToUrl = artifactsSubUrl
-        .appendingPathComponent("failed")
-        .appendingPathComponent(snapshotFileUrl.lastPathComponent)
-      try fileManager.createDirectory(
-        at: writeToUrl.deletingLastPathComponent(), withIntermediateDirectories: true
+      let artifactsUrl = URL(
+        fileURLWithPath: ProcessInfo.processInfo.environment["SNAPSHOT_ARTIFACTS"] ?? NSTemporaryDirectory(), isDirectory: true
       )
-      try snapshotting.diffing.toData(diffable).write(to: writeToUrl)
+      let artifactsSubUrl = artifactsUrl.appendingPathComponent(fileName)
+      try fileManager.createDirectory(at: artifactsSubUrl, withIntermediateDirectories: true)
+      let failedSnapshotFileUrl = artifactsSubUrl.appendingPathComponent(snapshotFileUrl.lastPathComponent)
+      try snapshotting.diffing.toData(diffable).write(to: failedSnapshotFileUrl)
 
       if !attachments.isEmpty {
         #if !os(Linux) && !os(Windows)
@@ -342,12 +299,12 @@ public func verifySnapshot<Value, Format>(
       }
 
       let diffMessage = diffTool
-        .map { "\($0) \"\(snapshotFileUrl.path)\" \"\(writeToUrl.path)\"" }
+        .map { "\($0) \"\(snapshotFileUrl.path)\" \"\(failedSnapshotFileUrl.path)\"" }
         ?? """
         @\(minus)
         "\(snapshotFileUrl.path)"
         @\(plus)
-        "\(writeToUrl.path)"
+        "\(failedSnapshotFileUrl.path)"
 
         To configure output for a custom diff tool, like Kaleidoscope:
 
