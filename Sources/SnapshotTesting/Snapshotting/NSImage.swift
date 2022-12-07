@@ -1,4 +1,5 @@
 #if os(macOS)
+import CoreImage.CIFilterBuiltins
 import Cocoa
 import XCTest
 

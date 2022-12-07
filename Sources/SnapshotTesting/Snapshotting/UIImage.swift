@@ -1,4 +1,5 @@
 #if os(iOS) || os(tvOS)
+import CoreImage.CIFilterBuiltins
 import UIKit
 import XCTest
 
