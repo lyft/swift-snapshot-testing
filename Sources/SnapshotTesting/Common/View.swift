@@ -1031,14 +1031,16 @@ private func add(traits: UITraitCollection, viewController: UIViewController, to
   viewController.view.setNeedsLayout()
   viewController.view.layoutIfNeeded()
 
-  return {
-    rootViewController.beginAppearanceTransition(false, animated: false)
-    viewController.willMove(toParent: nil)
-    viewController.view.removeFromSuperview()
-    viewController.removeFromParent()
-    viewController.didMove(toParent: nil)
-    rootViewController.endAppearanceTransition()
-    window.rootViewController = nil
+  return { [weak rootViewController, weak viewController, weak window] in
+    rootViewController?.beginAppearanceTransition(false, animated: false)
+    viewController?.willMove(toParent: nil)
+    viewController?.view.removeFromSuperview()
+    viewController?.removeFromParent()
+    viewController?.didMove(toParent: nil)
+    rootViewController?.endAppearanceTransition()
+    window?.isHidden = true
+    window?.rootViewController = nil
+    window?.windowScene = nil
   }
 }
 
