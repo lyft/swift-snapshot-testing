@@ -291,7 +291,7 @@ public func verifySnapshot<Value, Format>(
             ? """
               No reference was found on disk. Treating recordings as artifacts.
 
-              open "\(writeToUrl.path)"
+              open "\(writeToUrl.absoluteString)"
 
               Recorded snapshot: …
               """
