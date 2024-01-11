@@ -1044,7 +1044,11 @@ private func add(traits: UITraitCollection, viewController: UIViewController, to
 
 private func getKeyWindow() -> UIWindow? {
   var window: UIWindow?
-  if #available(iOS 13.0, *) {
+  if #available(iOS 15.0, *) {
+      let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+      let scene = scenes.first { $0.screen == UIScreen.main } ?? scenes.first
+      window = scene?.keyWindow
+  } else if #available(iOS 13.0, *) {
       window = UIApplication.sharedIfAvailable?.windows.first { $0.isKeyWindow }
   } else {
       window = UIApplication.sharedIfAvailable?.keyWindow
