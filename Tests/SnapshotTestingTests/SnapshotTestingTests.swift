@@ -467,11 +467,12 @@ final class SnapshotTestingTests: XCTestCase {
           self.view.updateConstraintsIfNeeded()
         }
 
+        @available(iOS, deprecated: 17.0)
+        @available(tvOS, deprecated: 17.0)
         override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
           super.traitCollectionDidChange(previousTraitCollection)
-          if #unavailable(iOS 17.0, tvOS 17.0) {
-            updateFonts()
-          }
+          guard #unavailable(iOS 17.0, tvOS 17.0) else { return }
+          updateFonts()
         }
       }
 
@@ -656,11 +657,11 @@ final class SnapshotTestingTests: XCTestCase {
           self.view.updateConstraintsIfNeeded()
         }
 
+        @available(iOS, deprecated: 17.0)
         override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
           super.traitCollectionDidChange(previousTraitCollection)
-          if #unavailable(iOS 17.0) {
-            updateFonts()
-          }
+          guard #unavailable(iOS 17.0) else { return }
+          updateFonts()
         }
       }
 
@@ -769,11 +770,11 @@ final class SnapshotTestingTests: XCTestCase {
         collectionView.collectionViewLayout.invalidateLayout()
       }
 
+      @available(iOS, deprecated: 17.0)
       override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if #unavailable(iOS 17.0) {
-          collectionView.collectionViewLayout.invalidateLayout()
-        }
+        guard #unavailable(iOS 17.0) else { return }
+        collectionView.collectionViewLayout.invalidateLayout()
       }
 
       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
