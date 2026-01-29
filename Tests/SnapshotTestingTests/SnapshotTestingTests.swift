@@ -450,16 +450,28 @@ final class SnapshotTestingTests: XCTestCase {
             self.bottomLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             self.bottomLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             ])
+          if #available(iOS 17.0, tvOS 17.0, *) {
+            registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (self: Self, previousTraitCollection: UITraitCollection) in
+              self.updateFonts()
+            }
+          }
+          updateFonts()
         }
 
-        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-          super.traitCollectionDidChange(previousTraitCollection)
+        private func updateFonts() {
           self.topLabel.font = .preferredFont(forTextStyle: .headline, compatibleWith: self.traitCollection)
           self.leadingLabel.font = .preferredFont(forTextStyle: .body, compatibleWith: self.traitCollection)
           self.trailingLabel.font = .preferredFont(forTextStyle: .body, compatibleWith: self.traitCollection)
           self.bottomLabel.font = .preferredFont(forTextStyle: .subheadline, compatibleWith: self.traitCollection)
           self.view.setNeedsUpdateConstraints()
           self.view.updateConstraintsIfNeeded()
+        }
+
+        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+          super.traitCollectionDidChange(previousTraitCollection)
+          if #unavailable(iOS 17.0, tvOS 17.0) {
+            updateFonts()
+          }
         }
       }
 
@@ -627,16 +639,28 @@ final class SnapshotTestingTests: XCTestCase {
             self.bottomLabel.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
             self.bottomLabel.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor),
             ])
+          if #available(iOS 17.0, *) {
+            registerForTraitChanges([UITraitPreferredContentSizeCategory.self]) { (self: Self, previousTraitCollection: UITraitCollection) in
+              self.updateFonts()
+            }
+          }
+          updateFonts()
         }
 
-        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-          super.traitCollectionDidChange(previousTraitCollection)
+        private func updateFonts() {
           self.topLabel.font = .preferredFont(forTextStyle: .headline, compatibleWith: self.traitCollection)
           self.leadingLabel.font = .preferredFont(forTextStyle: .body, compatibleWith: self.traitCollection)
           self.trailingLabel.font = .preferredFont(forTextStyle: .body, compatibleWith: self.traitCollection)
           self.bottomLabel.font = .preferredFont(forTextStyle: .subheadline, compatibleWith: self.traitCollection)
           self.view.setNeedsUpdateConstraints()
           self.view.updateConstraintsIfNeeded()
+        }
+
+        override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+          super.traitCollectionDidChange(previousTraitCollection)
+          if #unavailable(iOS 17.0) {
+            updateFonts()
+          }
         }
       }
 
@@ -733,6 +757,11 @@ final class SnapshotTestingTests: XCTestCase {
         ])
 
         collectionView.reloadData()
+        if #available(iOS 17.0, *) {
+          registerForTraitChanges([UITraitHorizontalSizeClass.self, UITraitVerticalSizeClass.self]) { (self: Self, previousTraitCollection: UITraitCollection) in
+            self.collectionView.collectionViewLayout.invalidateLayout()
+          }
+        }
       }
 
       override func viewDidLayoutSubviews() {
@@ -742,7 +771,9 @@ final class SnapshotTestingTests: XCTestCase {
 
       override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        collectionView.collectionViewLayout.invalidateLayout()
+        if #unavailable(iOS 17.0) {
+          collectionView.collectionViewLayout.invalidateLayout()
+        }
       }
 
       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
