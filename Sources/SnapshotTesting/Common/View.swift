@@ -509,19 +509,33 @@ extension UITraitCollection {
       ]
       switch orientation {
       case .landscape:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .compact),
-            .init(verticalSizeClass: .compact)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .compact
+            mutableTraits.verticalSizeClass = .compact
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .compact),
+              .init(verticalSizeClass: .compact)
+            ]
+          )
+        }
       case .portrait:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .compact),
-            .init(verticalSizeClass: .regular),
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .compact
+            mutableTraits.verticalSizeClass = .regular
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .compact),
+              .init(verticalSizeClass: .regular),
+            ]
+          )
+        }
       }
   }
 
@@ -535,19 +549,33 @@ extension UITraitCollection {
       ]
       switch orientation {
       case .landscape:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .compact),
-            .init(verticalSizeClass: .compact)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .compact
+            mutableTraits.verticalSizeClass = .compact
+          }
+        } else {
+          return UITraitCollection(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .compact),
+              .init(verticalSizeClass: .compact)
+            ]
+          )
+        }
       case .portrait:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .compact),
-            .init(verticalSizeClass: .regular)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .compact
+            mutableTraits.verticalSizeClass = .regular
+          }
+        } else {
+          return UITraitCollection(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .compact),
+              .init(verticalSizeClass: .regular)
+            ]
+          )
+        }
       }
   }
 
@@ -561,19 +589,33 @@ extension UITraitCollection {
       ]
       switch orientation {
       case .landscape:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .regular),
-            .init(verticalSizeClass: .compact)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .regular
+            mutableTraits.verticalSizeClass = .compact
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .regular),
+              .init(verticalSizeClass: .compact)
+            ]
+          )
+        }
       case .portrait:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .compact),
-            .init(verticalSizeClass: .regular)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .compact
+            mutableTraits.verticalSizeClass = .regular
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .compact),
+              .init(verticalSizeClass: .regular)
+            ]
+          )
+        }
       }
   }
 
@@ -587,19 +629,33 @@ extension UITraitCollection {
       ]
       switch orientation {
       case .landscape:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .compact),
-            .init(verticalSizeClass: .compact)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .compact
+            mutableTraits.verticalSizeClass = .compact
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .compact),
+              .init(verticalSizeClass: .compact)
+            ]
+          )
+        }
       case .portrait:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .compact),
-            .init(verticalSizeClass: .regular)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .compact
+            mutableTraits.verticalSizeClass = .regular
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .compact),
+              .init(verticalSizeClass: .regular)
+            ]
+          )
+        }
       }
   }
 
@@ -613,19 +669,33 @@ extension UITraitCollection {
       ]
       switch orientation {
       case .landscape:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .regular),
-            .init(verticalSizeClass: .compact)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .regular
+            mutableTraits.verticalSizeClass = .compact
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .regular),
+              .init(verticalSizeClass: .compact)
+            ]
+          )
+        }
       case .portrait:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .compact),
-            .init(verticalSizeClass: .regular)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .compact
+            mutableTraits.verticalSizeClass = .regular
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .compact),
+              .init(verticalSizeClass: .regular)
+            ]
+          )
+        }
       }
   }
 
@@ -639,19 +709,33 @@ extension UITraitCollection {
       ]
       switch orientation {
       case .landscape:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .regular),
-            .init(verticalSizeClass: .compact)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .regular
+            mutableTraits.verticalSizeClass = .compact
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .regular),
+              .init(verticalSizeClass: .compact)
+            ]
+          )
+        }
       case .portrait:
-        return .init(
-          traitsFrom: base + [
-            .init(horizontalSizeClass: .compact),
-            .init(verticalSizeClass: .regular)
-          ]
-        )
+        if #available(iOS 17.0, *) {
+          return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+            mutableTraits.horizontalSizeClass = .compact
+            mutableTraits.verticalSizeClass = .regular
+          }
+        } else {
+          return .init(
+            traitsFrom: base + [
+              .init(horizontalSizeClass: .compact),
+              .init(verticalSizeClass: .regular)
+            ]
+          )
+        }
       }
   }
 
@@ -665,19 +749,33 @@ extension UITraitCollection {
     ]
     switch orientation {
     case .landscape:
-      return .init(
-        traitsFrom: base + [
-          .init(horizontalSizeClass: .compact),
-          .init(verticalSizeClass: .compact)
-        ]
-      )
+      if #available(iOS 17.0, *) {
+        return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+          mutableTraits.horizontalSizeClass = .compact
+          mutableTraits.verticalSizeClass = .compact
+        }
+      } else {
+        return .init(
+          traitsFrom: base + [
+            .init(horizontalSizeClass: .compact),
+            .init(verticalSizeClass: .compact)
+          ]
+        )
+      }
     case .portrait:
-      return .init(
-        traitsFrom: base + [
-          .init(horizontalSizeClass: .compact),
-          .init(verticalSizeClass: .regular)
-        ]
-      )
+      if #available(iOS 17.0, *) {
+        return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+          mutableTraits.horizontalSizeClass = .compact
+          mutableTraits.verticalSizeClass = .regular
+        }
+      } else {
+        return .init(
+          traitsFrom: base + [
+            .init(horizontalSizeClass: .compact),
+            .init(verticalSizeClass: .regular)
+          ]
+        )
+      }
     }
   }
 
@@ -691,19 +789,33 @@ extension UITraitCollection {
     ]
     switch orientation {
     case .landscape:
-      return .init(
-        traitsFrom: base + [
-          .init(horizontalSizeClass: .regular),
-          .init(verticalSizeClass: .compact)
-        ]
-      )
+      if #available(iOS 17.0, *) {
+        return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+          mutableTraits.horizontalSizeClass = .regular
+          mutableTraits.verticalSizeClass = .compact
+        }
+      } else {
+        return .init(
+          traitsFrom: base + [
+            .init(horizontalSizeClass: .regular),
+            .init(verticalSizeClass: .compact)
+          ]
+        )
+      }
     case .portrait:
-      return .init(
-        traitsFrom: base + [
-          .init(horizontalSizeClass: .compact),
-          .init(verticalSizeClass: .regular)
-        ]
-      )
+      if #available(iOS 17.0, *) {
+        return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+          mutableTraits.horizontalSizeClass = .compact
+          mutableTraits.verticalSizeClass = .regular
+        }
+      } else {
+        return .init(
+          traitsFrom: base + [
+            .init(horizontalSizeClass: .compact),
+            .init(verticalSizeClass: .regular)
+          ]
+        )
+      }
     }
   }
 
@@ -716,19 +828,33 @@ extension UITraitCollection {
     ]
     switch orientation {
     case .landscape:
-      return .init(
-        traitsFrom: base + [
-          .init(horizontalSizeClass: .compact),
-          .init(verticalSizeClass: .compact)
-        ]
-      )
+      if #available(iOS 17.0, *) {
+        return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+          mutableTraits.horizontalSizeClass = .compact
+          mutableTraits.verticalSizeClass = .compact
+        }
+      } else {
+        return .init(
+          traitsFrom: base + [
+            .init(horizontalSizeClass: .compact),
+            .init(verticalSizeClass: .compact)
+          ]
+        )
+      }
     case .portrait:
-      return .init(
-        traitsFrom: base + [
-          .init(horizontalSizeClass: .compact),
-          .init(verticalSizeClass: .regular)
-        ]
-      )
+      if #available(iOS 17.0, *) {
+        return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+          mutableTraits.horizontalSizeClass = .compact
+          mutableTraits.verticalSizeClass = .regular
+        }
+      } else {
+        return .init(
+          traitsFrom: base + [
+            .init(horizontalSizeClass: .compact),
+            .init(verticalSizeClass: .regular)
+          ]
+        )
+      }
     }
   }
 
@@ -741,19 +867,33 @@ extension UITraitCollection {
     ]
     switch orientation {
     case .landscape:
-      return .init(
-        traitsFrom: base + [
-          .init(horizontalSizeClass: .regular),
-          .init(verticalSizeClass: .compact)
-        ]
-      )
+      if #available(iOS 17.0, *) {
+        return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+          mutableTraits.horizontalSizeClass = .regular
+          mutableTraits.verticalSizeClass = .compact
+        }
+      } else {
+        return .init(
+          traitsFrom: base + [
+            .init(horizontalSizeClass: .regular),
+            .init(verticalSizeClass: .compact)
+          ]
+        )
+      }
     case .portrait:
-      return .init(
-        traitsFrom: base + [
-          .init(horizontalSizeClass: .compact),
-          .init(verticalSizeClass: .regular)
-        ]
-      )
+      if #available(iOS 17.0, *) {
+        return UITraitCollection(traitsFrom: base).modifyingTraits { mutableTraits in
+          mutableTraits.horizontalSizeClass = .compact
+          mutableTraits.verticalSizeClass = .regular
+        }
+      } else {
+        return .init(
+          traitsFrom: base + [
+            .init(horizontalSizeClass: .compact),
+            .init(verticalSizeClass: .regular)
+          ]
+        )
+      }
     }
   }
 
@@ -770,22 +910,42 @@ extension UITraitCollection {
   public static let iPadPro12_9 = iPad
   public static let iPadPro12_9_Compact_SplitView = iPadCompactSplitView
 
-  private static let iPad = UITraitCollection(
-    traitsFrom: [
-//      .init(displayScale: 2),
-      .init(horizontalSizeClass: .regular),
-      .init(verticalSizeClass: .regular),
-      .init(userInterfaceIdiom: .pad)
-    ]
-  )
+    private static let iPad: UITraitCollection = {
+        if #available(iOS 17.0, *) {
+            return UITraitCollection().modifyingTraits { mutableTraits in
+                mutableTraits.horizontalSizeClass = .regular
+                mutableTraits.verticalSizeClass = .regular
+                mutableTraits.userInterfaceIdiom = .pad
+            }
+        } else {
+            return UITraitCollection(
+                traitsFrom: [
+                    //      .init(displayScale: 2),
+                    .init(horizontalSizeClass: .regular),
+                    .init(verticalSizeClass: .regular),
+                    .init(userInterfaceIdiom: .pad)
+                ]
+            )
+        }
+    }()
 
-  private static let iPadCompactSplitView = UITraitCollection(
-    traitsFrom: [
-      .init(horizontalSizeClass: .compact),
-      .init(verticalSizeClass: .regular),
-      .init(userInterfaceIdiom: .pad)
-    ]
-  )
+    private static let iPadCompactSplitView: UITraitCollection = {
+        if #available(iOS 17.0, *) {
+            return UITraitCollection().modifyingTraits { mutableTraits in
+                mutableTraits.horizontalSizeClass = .compact
+                mutableTraits.verticalSizeClass = .regular
+                mutableTraits.userInterfaceIdiom = .pad
+            }
+        } else {
+            return UITraitCollection(
+                traitsFrom: [
+                    .init(horizontalSizeClass: .compact),
+                    .init(verticalSizeClass: .regular),
+                    .init(userInterfaceIdiom: .pad)
+                ]
+            )
+        }
+    }()
   #elseif os(tvOS)
   // TODO
   #endif
@@ -992,6 +1152,65 @@ func renderer(bounds: CGRect, for traits: UITraitCollection) -> UIGraphicsImageR
   return renderer
 }
 
+@available(iOS 17.0, tvOS 17.0, *)
+private func applyTraits(_ traits: UITraitCollection, to viewController: UIViewController) {
+  // Size classes and idiom (only set if specified)
+  if traits.horizontalSizeClass != .unspecified {
+    viewController.traitOverrides.horizontalSizeClass = traits.horizontalSizeClass
+  }
+  if traits.verticalSizeClass != .unspecified {
+    viewController.traitOverrides.verticalSizeClass = traits.verticalSizeClass
+  }
+  if traits.userInterfaceIdiom != .unspecified {
+    viewController.traitOverrides.userInterfaceIdiom = traits.userInterfaceIdiom
+  }
+
+  // Display properties (only set if non-zero/specified)
+  if traits.displayScale > 0 {
+    viewController.traitOverrides.displayScale = traits.displayScale
+  }
+  if traits.displayGamut != .unspecified {
+    viewController.traitOverrides.displayGamut = traits.displayGamut
+  }
+
+  // Appearance (only set if specified)
+  if traits.userInterfaceStyle != .unspecified {
+    viewController.traitOverrides.userInterfaceStyle = traits.userInterfaceStyle
+  }
+  if traits.userInterfaceLevel != .unspecified {
+    viewController.traitOverrides.userInterfaceLevel = traits.userInterfaceLevel
+  }
+  if traits.activeAppearance != .unspecified {
+    viewController.traitOverrides.activeAppearance = traits.activeAppearance
+  }
+
+  // Layout and typography
+  if traits.layoutDirection != .unspecified {
+    viewController.traitOverrides.layoutDirection = traits.layoutDirection
+  }
+  if traits.preferredContentSizeCategory != .unspecified {
+    viewController.traitOverrides.preferredContentSizeCategory = traits.preferredContentSizeCategory
+  }
+  if traits.legibilityWeight != .unspecified {
+    viewController.traitOverrides.legibilityWeight = traits.legibilityWeight
+  }
+  if let language = traits.typesettingLanguage {
+    viewController.traitOverrides.typesettingLanguage = language
+  }
+
+  // Interaction and accessibility
+  if traits.forceTouchCapability != .unknown {
+    viewController.traitOverrides.forceTouchCapability = traits.forceTouchCapability
+  }
+  if traits.accessibilityContrast != .unspecified {
+    viewController.traitOverrides.accessibilityContrast = traits.accessibilityContrast
+  }
+
+  if traits.sceneCaptureState != .unspecified {
+    viewController.traitOverrides.sceneCaptureState = traits.sceneCaptureState
+  }
+}
+
 private func add(traits: UITraitCollection, viewController: UIViewController, to window: UIWindow) -> () -> Void {
   let rootViewController: UIViewController
   if viewController != window.rootViewController {
@@ -1017,7 +1236,11 @@ private func add(traits: UITraitCollection, viewController: UIViewController, to
   } else {
     rootViewController = viewController
   }
-  rootViewController.setOverrideTraitCollection(traits, forChild: viewController)
+  if #available(iOS 17.0, tvOS 17.0, *) {
+    applyTraits(traits, to: viewController)
+  } else {
+    rootViewController.setOverrideTraitCollection(traits, forChild: viewController)
+  }
   viewController.didMove(toParent: rootViewController)
 
   window.rootViewController = rootViewController
