@@ -1107,7 +1107,53 @@ func prepareView(
     viewController.view.bounds = view.bounds
     viewController.view.addSubview(view)
   }
-  let traits = UITraitCollection(traitsFrom: [config.traits, traits])
+  let combinedTraits: UITraitCollection
+  if #available(iOS 17.0, tvOS 17.0, *) {
+    combinedTraits = traits.modifyingTraits { mutableTraits in
+      // Copy all traits from config.traits
+      if config.traits.horizontalSizeClass != .unspecified {
+        mutableTraits.horizontalSizeClass = config.traits.horizontalSizeClass
+      }
+      if config.traits.verticalSizeClass != .unspecified {
+        mutableTraits.verticalSizeClass = config.traits.verticalSizeClass
+      }
+      if config.traits.userInterfaceIdiom != .unspecified {
+        mutableTraits.userInterfaceIdiom = config.traits.userInterfaceIdiom
+      }
+      if config.traits.displayScale > 0 {
+        mutableTraits.displayScale = config.traits.displayScale
+      }
+      if config.traits.displayGamut != .unspecified {
+        mutableTraits.displayGamut = config.traits.displayGamut
+      }
+      if config.traits.userInterfaceStyle != .unspecified {
+        mutableTraits.userInterfaceStyle = config.traits.userInterfaceStyle
+      }
+      if config.traits.userInterfaceLevel != .unspecified {
+        mutableTraits.userInterfaceLevel = config.traits.userInterfaceLevel
+      }
+      if config.traits.layoutDirection != .unspecified {
+        mutableTraits.layoutDirection = config.traits.layoutDirection
+      }
+      if config.traits.preferredContentSizeCategory != .unspecified {
+        mutableTraits.preferredContentSizeCategory = config.traits.preferredContentSizeCategory
+      }
+      if config.traits.forceTouchCapability != .unknown {
+        mutableTraits.forceTouchCapability = config.traits.forceTouchCapability
+      }
+      if config.traits.accessibilityContrast != .unspecified {
+        mutableTraits.accessibilityContrast = config.traits.accessibilityContrast
+      }
+      if config.traits.legibilityWeight != .unspecified {
+        mutableTraits.legibilityWeight = config.traits.legibilityWeight
+      }
+      if config.traits.activeAppearance != .unspecified {
+        mutableTraits.activeAppearance = config.traits.activeAppearance
+      }
+    }
+  } else {
+    combinedTraits = UITraitCollection(traitsFrom: [config.traits, traits])
+  }
   let window: UIWindow
   if drawHierarchyInKeyWindow {
     guard let keyWindow = getKeyWindow() else {
@@ -1117,11 +1163,11 @@ func prepareView(
     window.frame.size = size
   } else {
     window = Window(
-      config: .init(safeArea: config.safeArea, size: config.size ?? size, traits: traits),
+      config: .init(safeArea: config.safeArea, size: config.size ?? size, traits: combinedTraits),
       viewController: viewController
     )
   }
-  let dispose = add(traits: traits, viewController: viewController, to: window)
+  let dispose = add(traits: combinedTraits, viewController: viewController, to: window)
 
   if size.width == 0 || size.height == 0 {
     // Try to call sizeToFit() if the view still has invalid size
